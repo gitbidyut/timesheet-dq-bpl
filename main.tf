@@ -201,7 +201,7 @@ resource "aws_codepipeline" "dq_pipeline" {
       name             = "GitHub_Source"
       category         = "Source"
       owner            = "ThirdParty"
-      provider         = ""CodeStarSourceConnection""
+      provider         = "CodeStarSourceConnection"
       version          = "1"
       output_artifacts = ["source_output"]
 
