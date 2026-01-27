@@ -73,40 +73,49 @@ resource "aws_sns_topic_subscription" "email" {
 ############################
 # IAM Role for CodePipeline
 ############################
-resource "aws_iam_role" "codepipeline_role" {
-  name = "bpl-codepipeline-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = {
-          Service = "codepipeline.amazonaws.com"
-        }
-        Action = "sts:AssumeRole"
-      }
-    ]
-  })
+r############################
+# IAM Role for CodePipeline
+############################
+data "aws_iam_policy_document" "codepipeline_assume" {
+  statement {
+    effect = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["codepipeline.amazonaws.com"]
+    }
+    actions = ["sts:AssumeRole"]
+  }
 }
 
-resource "aws_iam_role_policy" "codepipeline_policy" {
-  role = aws_iam_role.codepipeline_role.id
+resource "aws_iam_role" "codepipeline_role" {
+  name               = "${var.project}-codepipeline-role"
+  assume_role_policy = data.aws_iam_policy_document.codepipeline_assume.json
+}
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "s3:GetObject",
-          "s3:GetObjectVersion",
-          "s3:PutObject"
-        ]
-        Resource = "${aws_s3_bucket.codepipeline_artifacts.arn}/*"
-      }
+data "aws_iam_policy_document" "codepipeline_policy" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "s3:GetObject",
+      "s3:GetObjectVersion",
+      "s3:PutObject",
+      "s3:ListBucket",
+      "codecommit:GitPull",
+      "codecommit:GetBranch",
+      "codebuild:BatchGetBuilds",
+      "codebuild:StartBuild",
+      "codebuild:BatchGetProjects",
+      "iam:PassRole",
+      "codestar-connections:UseConnection"
     ]
-  })
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role_policy" "codepipeline_policy_attach" {
+  name   = "${var.project}-codepipeline-policy"
+  role   = aws_iam_role.codepipeline_role.id
+  policy = data.aws_iam_policy_document.codepipeline_policy.json
 }
 
 
