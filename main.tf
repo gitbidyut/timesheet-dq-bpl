@@ -198,15 +198,15 @@ resource "aws_codepipeline" "dq_pipeline" {
     name = "Source"
 
     action {
-      name             = "GitHub_Source"
+      name             = "Source"
       category         = "Source"
-      owner            = "ThirdParty"
+      owner            = "AWS"
       provider         = "CodeStarSourceConnection"
       version          = "1"
       output_artifacts = ["source_output"]
 
       configuration = {
-        ConnectionArn    = "arn:aws:codeconnections:us-east-1:361509912577:connection/09caa1e3-a6ab-45df-be90-10c14777466b"
+        ConnectionArn    = "arn:aws:codeconnections:eu-west-1:361509912577:connection/9c948075-73f7-4c60-8d1a-2539faa9ba9f"
         FullRepositoryId = "gitbidyut/timesheet-dq-bpl" # e.g., "myuser/my-repo"
         #RepositoryName = aws_codecommit_repository.app_repo.repository_name
         BranchName     = "main"
