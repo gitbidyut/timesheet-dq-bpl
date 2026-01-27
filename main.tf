@@ -58,39 +58,7 @@ resource "aws_s3_bucket_versioning" "artifact_versioning" {
   }
 }
 
-# resource "aws_sagemaker_processing_job" "data_quality" {
-#   name = "timesheet-data-quality-${var.env}"
-#   role_arn = aws_iam_role.sagemaker_role.arn
 
-#   processing_resources {
-#     cluster_config {
-#       instance_type  = "ml.m5.large"
-#       instance_count = 1
-#       volume_size_in_gb = 30
-#     }
-#   }
-
-#   app_specification {
-#     image_uri = "763104351884.dkr.ecr.${var.region}.amazonaws.com/sagemaker-processing-container:latest"
-#     container_entrypoint = ["python3", "/opt/ml/processing/code/data_quality.py"]
-#   }
-
-#   processing_inputs {
-#     input_name = "input-data"
-#     s3_input {
-#       s3_uri = "s3://${aws_s3_bucket.timesheet_raw.bucket}/input/"
-#       local_path = "/opt/ml/processing/input"
-#     }
-#   }
-
-#   processing_outputs {
-#     output_name = "dq-results"
-#     s3_output {
-#       s3_uri = "s3://${aws_s3_bucket.dq_results.bucket}/results/"
-#       local_path = "/opt/ml/processing/output"
-#     }
-#   }
-# }
 
 
 resource "aws_sns_topic" "dq_alerts" {
@@ -197,10 +165,7 @@ resource "aws_codebuild_project" "tf_project" {
     type                        = "LINUX_CONTAINER"
     privileged_mode             = false
 
-    # environment_variable {
-    #   name  = "PIPELINE_NAME"
-    #   value = aws_sagemaker_pipeline.dq_pipeline.pipeline_name
-    # }
+    
   }
 
   source {
@@ -236,7 +201,7 @@ resource "aws_codepipeline" "dq_pipeline" {
       name             = "GitHub_Source"
       category         = "Source"
       owner            = "ThirdParty"
-      provider         = "GitHub"
+      provider         = ""CodeStarSourceConnection""
       version          = "1"
       output_artifacts = ["source_output"]
 
