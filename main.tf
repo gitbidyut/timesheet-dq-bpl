@@ -183,7 +183,7 @@ resource "aws_codebuild_project" "tf_project" {
 
 
 resource "aws_codepipeline" "dq_pipeline" {
-  name     = "$bpl-pipeline"
+  name     = "bpl-pipeline"
   role_arn = aws_iam_role.codepipeline_role.arn
 
   ############################
