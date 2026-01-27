@@ -73,7 +73,7 @@ resource "aws_sns_topic_subscription" "email" {
 ############################
 # IAM Role for CodePipeline
 ############################
-r############################
+############################
 # IAM Role for CodePipeline
 ############################
 data "aws_iam_policy_document" "codepipeline_assume" {
@@ -90,6 +90,7 @@ data "aws_iam_policy_document" "codepipeline_assume" {
 resource "aws_iam_role" "codepipeline_role" {
   name               = "${var.project}-codepipeline-role"
   assume_role_policy = data.aws_iam_policy_document.codepipeline_assume.json
+  
 }
 
 data "aws_iam_policy_document" "codepipeline_policy" {
@@ -110,7 +111,11 @@ data "aws_iam_policy_document" "codepipeline_policy" {
     ]
     resources = ["*"]
   }
+ 
 }
+  
+  
+
 
 resource "aws_iam_role_policy" "codepipeline_policy_attach" {
   name   = "${var.project}-codepipeline-policy"
