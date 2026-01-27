@@ -7,10 +7,10 @@ phases:
       - mv terraform /usr/local/bin/
   build:
     commands:
-      # - cd terraform
-      # - terraform init
-      # - terraform plan
-      # - terraform apply -auto-approve
+      - cd terraform
+      - terraform init
+      - terraform plan
+      - terraform apply -auto-approve
 
 
 
