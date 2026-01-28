@@ -73,9 +73,6 @@ resource "aws_sns_topic_subscription" "email" {
 ############################
 # IAM Role for CodePipeline
 ############################
-############################
-# IAM Role for CodePipeline
-############################
 data "aws_iam_policy_document" "codepipeline_assume" {
   statement {
     effect = "Allow"
@@ -107,7 +104,9 @@ data "aws_iam_policy_document" "codepipeline_policy" {
       "codebuild:StartBuild",
       "codebuild:BatchGetProjects",
       "iam:PassRole",
-      "codestar-connections:UseConnection"
+      "codestar-connections:UseConnection",
+      "codeconnections:UseConnection"
+               
     ]
     resources = ["*"]
   }
@@ -149,7 +148,8 @@ resource "aws_iam_role_policy" "codebuild_policy" {
         Action = [
           "sagemaker:StartPipelineExecution",
           "sagemaker:DescribePipeline",
-          "sagemaker:ListPipelineExecutions"
+          "sagemaker:ListPipelineExecutions",
+          "s3:*"
         ]
         Resource = "*"
       },
