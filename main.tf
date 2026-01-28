@@ -41,6 +41,8 @@ resource "aws_s3_bucket" "timesheet_raw" {
 resource "aws_s3_bucket" "dq_results" {
   bucket = "timesheet-dq-results-bpl-${var.env}"
 }
+
+
 ############################
 # CodePipeline Artifact Bucket
 ############################
