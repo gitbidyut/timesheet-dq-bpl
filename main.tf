@@ -184,7 +184,7 @@ resource "aws_codebuild_project" "tf_project" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = file("${path.module}/buildspec.yml")
+    buildspec = "buildspec.yml"
   }
 
   logs_config {
