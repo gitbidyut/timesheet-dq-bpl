@@ -5,11 +5,8 @@ phases:
       - echo "hello"
   build:
     commands:
-        - aws sagemaker create-processing-job \
-          --processing-job-name timesheet-dq-$CODEBUILD_BUILD_ID \
-          --app-specification ImageUri=763104351884.dkr.ecr.$AWS_REGION.amazonaws.com/sagemaker-processing-container:latest \
-          --role-arn $SAGEMAKER_ROLE_ARN \
-          --processing-resources ClusterConfig={InstanceType=ml.m5.large,InstanceCount=1,VolumeS
+      - echo "Starting SageMaker Pipeline execution"
+      - aws sagemaker start-pipeline-execution --pipeline-name "$PIPELINE_NAME" --pipeline-name timesheet-dq-dev
        
 
 
