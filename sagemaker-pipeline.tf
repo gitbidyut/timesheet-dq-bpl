@@ -1,5 +1,5 @@
 resource "aws_sagemaker_pipeline" "dq_pipeline" {
-  pipeline_name         = "timesheet-dq-${var.env}"
+  pipeline_name         = "timesheet-edfx-${var.env}"
   pipeline_display_name = "pipe-line-bpl"
   role_arn              = aws_iam_role.sagemaker_role.arn
 

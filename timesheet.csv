@@ -1,0 +1,9 @@
+Employee,Employee Nr.,Cost Center,Activity Code,Description,Day,Date,Hours,Project Code
+John Doe,EMP001,CC1001,DEV,Development work,Monday,2024-12-02,8,PRJ001
+Jane Smith,EMP002,CC1002,QA, Testing activities,Tuesday,2024-12-03,7.5,PRJ002
+Ravi Kumar,EMP003,CC1003,,Documentation work,Wednesday,2024-12-04,6,PRJ003
+Anita Sharma,EMP004,CC1001,DEV,Development work ,Thursday,2024-12-05,9,PRJ001
+Michael Brown,EMP005,CC1004,TRN," Training ",Friday,2024-12-06,4,PRJ004
+Sarah Lee,EMP006,CC1002,QA,Testing activities,Monday,2024-12-09,8,PRJ002
+Amit Patel,EMP007,CC1003,DEV,Development work,Tuesday,2024-12-10,8.5,PRJ003
+Neha Verma,EMP008,CC1001,QA,Testing activities,Wednesday,2024-12-11,0,PRJ002

@@ -6,4 +6,4 @@ phases:
   build:
     commands:
       - echo "Starting SageMaker Pipeline execution"
-      - aws sagemaker start-pipeline-execution  --pipeline-name timesheet-dq-dev
+      - aws sagemaker start-pipeline-execution  --pipeline-name timesheet-edfx-dev
