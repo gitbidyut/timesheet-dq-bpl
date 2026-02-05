@@ -9,6 +9,7 @@ env:
 phases:
   pre_build:
     commands:
+      - ls -l
       - echo "Logging in to Amazon ECR..."
       - aws --version
       - ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
