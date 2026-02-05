@@ -29,7 +29,7 @@ phases:
 
       # OPTIONAL: trigger SageMaker Pipeline
       - echo "Starting SageMaker Pipeline execution"
-      - aws sagemaker start-pipeline-execution --pipeline-name timesheet-dq-dev --region $AWS_REGION
+      - aws sagemaker start-pipeline-execution --pipeline-name sm-pipeline-smoketest --region $AWS_REGION
 
 artifacts:
   files:
