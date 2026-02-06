@@ -41,9 +41,11 @@ phases:
            --processing-inputs "[ {
                     \"InputName\": \"input-data\",
                      \"S3Input\": {
-                     \"S3Uri\": \"s3://bpl-timesheet-raw-dev/input/\",
-                      \"LocalPath\": \"/opt/ml/processing/input\",
-                        \"S3DataType\": \"S3Prefix\"  } }  ]" \
+                         \"S3Uri\": \"s3://bpl-timesheet-raw-dev/input/\",
+                         \"LocalPath\": \"/opt/ml/processing/input\",
+                         \"S3InputMode\": \"File\",
+                         \"S3DownloadMode\": \"FullyReplicated\",
+                          \"S3DataType\": \"S3Prefix\"  } }  ]" \
              --processing-output-config "{
                   \"Outputs\": [{
                    \"OutputName\": \"dq-output\",
