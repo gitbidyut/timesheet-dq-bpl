@@ -1,10 +1,11 @@
-resource "aws_sagemaker_pipeline" "smoke_test" {
-  pipeline_name         = "sm-pipeline-smoketest"
-  pipeline_display_name = "SageMaker-smoke-Test"
+resource "aws_sagemaker_pipeline" "dq_pipeline" {
+  pipeline_name         = "timesheet-edfx-${var.env}"
+  pipeline_display_name = "pipe-line-bpl"
   role_arn              = aws_iam_role.sagemaker_role.arn
 
   pipeline_definition = jsonencode({
     Version = "2020-12-01"
+
     Parameters = [
       {
         Name = "InputDataS3"
@@ -12,29 +13,25 @@ resource "aws_sagemaker_pipeline" "smoke_test" {
         DefaultValue = "s3://${aws_s3_bucket.raw.bucket}/input/"
       }
     ]
+
     Steps = [
       {
-        Name = "ProcessingSmokeTest"
+        Name = "DataQualityCheck"
         Type = "Processing"
-        
         Arguments = {
           AppSpecification = {
-             ImageUri = "${aws_ecr_repository.dq_repo.repository_url}:latest"
-             ContainerEntrypoint = [
-                   "python3",
-                  "/opt/ml/processing/code/data_quality.py"
-          ]
-      }
-
+            ImageUri = "${aws_ecr_repository.dq_repo.repository_url}:latest"
+          }
 
           ProcessingResources = {
             ClusterConfig = {
-              InstanceType   = "ml.t3.medium"
+              InstanceType   = "ml.m5.large"
               InstanceCount  = 1
               VolumeSizeInGB = 30
             }
           }
-           ProcessingInputs = [
+
+          ProcessingInputs = [
             {
               InputName = "input"
               S3Input = {
@@ -56,7 +53,9 @@ resource "aws_sagemaker_pipeline" "smoke_test" {
            }
          ]
         }
+
       }
+     }
     ]
   })
-}
+} 
