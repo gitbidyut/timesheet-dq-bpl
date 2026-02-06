@@ -5,7 +5,7 @@ env:
     IMAGE_REPO_NAME: timesheet-dq-processing
     IMAGE_TAG: latest
     AWS_REGION: eu-west-1
-
+    SAGEMAKER_ROLE_ARN: sagemaker-pipeline-smoketest-role
 phases:
   pre_build:
     commands:
