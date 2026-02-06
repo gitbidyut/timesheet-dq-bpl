@@ -16,9 +16,6 @@ resource "aws_codebuild_project" "start_pipeline" {
     image        = "aws/codebuild/standard:7.0"
     type         = "LINUX_CONTAINER"
 
-    environment_variable {
-      name  = "PIPELINE_NAME"
-      value = aws_sagemaker_pipeline.dq_pipeline.pipeline_name
-    }
+    
   }
 }
