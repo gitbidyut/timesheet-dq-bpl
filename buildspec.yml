@@ -41,14 +41,14 @@ phases:
            --processing-inputs "[ {
                     \"InputName\": \"input-data\",
                      \"S3Input\": {
-                     \"S3Uri\": \"s3://timesheet-raw-dev/input/\",
+                     \"S3Uri\": \"s3://bpl-timesheet-raw-dev/input/\",
                       \"LocalPath\": \"/opt/ml/processing/input\",
                         \"S3DataType\": \"S3Prefix\"  } }  ]" \
              --processing-output-config "{
                   \"Outputs\": [{
                    \"OutputName\": \"dq-output\",
                    \"S3Output\": {
-                   \"S3Uri\": \"s3://timesheet-dq-results-dev/output/\",
+                   \"S3Uri\": \"s3://bpl-timesheet-results-dev/output/\",
                   \"LocalPath\": \"/opt/ml/processing/output\",
                    \"S3UploadMode\": \"EndOfJob\"
                 }
