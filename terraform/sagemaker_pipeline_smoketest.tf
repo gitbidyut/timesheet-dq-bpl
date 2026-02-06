@@ -5,7 +5,13 @@ resource "aws_sagemaker_pipeline" "smoke_test" {
 
   pipeline_definition = jsonencode({
     Version = "2020-12-01"
-
+    Parameters = [
+      {
+        Name = "InputDataS3"
+        Type = "String"
+        DefaultValue = "s3://${aws_s3_bucket.raw.bucket}/input/"
+      }
+    ]
     Steps = [
       {
         Name = "ProcessingSmokeTest"
@@ -28,6 +34,27 @@ resource "aws_sagemaker_pipeline" "smoke_test" {
               VolumeSizeInGB = 30
             }
           }
+           ProcessingInputs = [
+            {
+              InputName = "input"
+              S3Input = {
+                S3Uri      = { "Get" = "Parameters.InputDataS3" }
+                LocalPath = "/opt/ml/processing/input"
+                S3DataType = "S3Prefix"
+              }
+            }
+          ]
+          ProcessingOutputConfig = {
+            Outputs = [
+            {
+              OutputName = "dq-output"
+              S3Output = {
+              S3Uri      = "s3://${aws_s3_bucket.results.bucket}/results/"
+              LocalPath = "/opt/ml/processing/output"
+              S3UploadMode = "EndOfJob"
+            }
+           }
+         ]
         }
       }
     ]
