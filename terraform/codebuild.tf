@@ -18,7 +18,7 @@ resource "aws_codebuild_project" "start_pipeline" {
 
     environment_variable {
       name  = "PIPELINE_NAME"
-      value = aws_sagemaker_pipeline.smoke_test.pipeline_name
+      value = aws_sagemaker_pipeline.dq_pipeline.pipeline_name
     }
   }
 }
