@@ -5,7 +5,8 @@ env:
     IMAGE_REPO_NAME: timesheet-dq-processing
     IMAGE_TAG: latest
     AWS_REGION: eu-west-1
-    SAGEMAKER_ROLE_ARN: sagemaker-pipeline-smoketest-role
+    JOB_NAME: bpl-manual-job
+    SAGEMAKER_ROLE_ARN: "arn:aws:iam::361509912577:role/sagemaker-pipeline-smoketest-role"
 phases:
   pre_build:
     commands:
@@ -30,7 +31,27 @@ phases:
 
       # OPTIONAL: trigger SageMaker Pipeline
       - echo "Starting SageMaker Pipeline execution"
-      - aws sagemaker start-pipeline-execution --pipeline-name timesheet-edfx-dev --region $AWS_REGION
+      - | 
+          aws sagemaker create-processing-job \
+          --region $AWS_REGION \
+          --processing-job-name $JOB_NAME \
+          --role-arn $SAGEMAKER_ROLE_ARN \
+          --app-specification "{
+            \"ImageUri\": \"361509912577.dkr.ecr.eu-west-1.amazonaws.com/timesheet-dq-processing:latest\",
+            \"ContainerEntrypoint\": [
+              \"python3\",
+              \"/opt/ml/processing/code/data_quality.py\"
+            ]
+          }" \
+          --processing-resources "{
+            \"ClusterConfig\": {
+              \"InstanceType\": \"ml.t3.medium\",
+              \"InstanceCount\": 1,
+              \"VolumeSizeInGB\": 30
+            }
+          }"
+
+      #- aws sagemaker start-pipeline-execution --pipeline-name timesheet-edfx-dev --region $AWS_REGION
 
 artifacts:
   files:
